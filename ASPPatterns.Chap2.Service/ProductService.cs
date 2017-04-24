@@ -9,23 +9,26 @@ namespace ASPPatterns.Chap2.Service
 {
     public class ProductService
     {
-        private ProductRepository _productCategory;
+        private IProductRepository _productCategory;
+        private ICacheStorage _cacheStorage;
 
-        public ProductService()
+        public ProductService(IProductRepository productRepository, ICacheStorage cacheStorage)
         {
-            _productCategory = new ProductRepository();
+            _productCategory = productRepository;
+            _cacheStorage = cacheStorage;
         }
 
         public IList<Product> GetAllProductsIn(int categoryId)
         {
             IList<Product> products = null;
 
-            string storageKey = $"products_in_categoryId_{categoryId}";
-            products = HttpContext.Current.Cache.Get(storageKey) as IList<Product>;
+            string storageKey = $"products_in_categoryId_{categoryId}";            
+            products = _cacheStorage.Retrieve<IList<Product>>(storageKey);
+
             if (products == null)
             {
-                products = _productCategory.GetAllProductsIn(categoryId);
-                HttpContext.Current.Cache.Insert(storageKey, products);
+                products = _productCategory.GetAllProductsIn(categoryId);                
+                _cacheStorage.Store(storageKey, products);
             }
 
             return products;

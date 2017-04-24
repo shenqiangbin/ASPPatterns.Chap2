@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HttpContextCacheStorage.cs" />
+    <Compile Include="ICacheStorage.cs" />
+    <Compile Include="IProductRepository.cs" />
+    <Compile Include="NullObjectCacheStorage.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="ProductService.cs" />

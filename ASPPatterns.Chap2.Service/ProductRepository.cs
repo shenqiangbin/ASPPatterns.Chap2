@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ASPPatterns.Chap2.Service
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         public IList<Product> GetAllProductsIn(int categoryId)
         {
